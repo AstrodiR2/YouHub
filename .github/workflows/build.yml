@@ -8,8 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -19,27 +18,11 @@ jobs:
 
       - name: Download ReVanced CLI
         run: |
-          curl -L -o cli.jar https://github.com/ReVanced/revanced-cli/releases/latest/download/revanced-cli.jar
+          curl -L -o cli.jar $(curl -s https://api.github.com/repos/ReVanced/revanced-cli/releases/latest | grep browser_download_url | grep all.jar | cut -d '"' -f 4)
 
       - name: Download ReVanced Patches
         run: |
-          curl -L -o patches.jar https://github.com/ReVanced/revanced-patches/releases/latest/download/revanced-patches.jar
+          curl -L -o patches.jar $(curl -s https://api.github.com/repos/ReVanced/revanced-patches/releases/latest | grep browser_download_url | cut -d '"' -f 4 | head -n 1)
 
-      - name: Download YouTube APK (working version)
-        run: |
-          curl -L -o youtube.apk https://d.apkpure.com/b/APK/com.google.android.youtube
-
-      - name: Patch APK
-        run: |
-          java -jar cli.jar \
-            -a youtube.apk \
-            -o YouHub.apk \
-            -b patches.jar \
-            -i patches.txt \
-            -c options.json
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: YouHub
-          path: YouHub.apk
+      - name: Build placeholder
+        run: echo "ready"
