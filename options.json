@@ -1,0 +1,22 @@
+[
+  {
+    "appName": "YouHub",
+    "packageName": "com.youhub.android",
+    "patches": {
+      "Remove ads": { "enabled": true },
+      "SponsorBlock": { "enabled": true },
+      "Return YouTube Dislike": { "enabled": true },
+      "Background playback": { "enabled": true },
+      "Custom branding": {
+        "enabled": true,
+        "options": { "appName": "YouHub" }
+      },
+      "GmsCore support": {
+        "enabled": true,
+        "options": {
+          "packageNameYouTube": "com.youhub.android"
+        }
+      }
+    }
+  }
+]
