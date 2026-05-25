@@ -8,7 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -16,11 +17,12 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Build placeholder
-        run: echo "Build step will be added next"
+      - name: Download ReVanced CLI
+        run: curl -L -o cli.jar https://github.com/ReVanced/revanced-cli/releases/latest/download/revanced-cli.jar
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: YouHub
-          path: .
+      - name: Download patches
+        run: curl -L -o patches.jar https://github.com/ReVanced/revanced-patches/releases/latest/download/revanced-patches.jar
+
+      - name: Build placeholder
+        run: echo "build running"
+
