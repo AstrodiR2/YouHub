@@ -18,11 +18,28 @@ jobs:
           java-version: 17
 
       - name: Download ReVanced CLI
-        run: curl -L -o cli.jar https://github.com/ReVanced/revanced-cli/releases/latest/download/revanced-cli.jar
+        run: |
+          curl -L -o cli.jar https://github.com/ReVanced/revanced-cli/releases/latest/download/revanced-cli.jar
 
-      - name: Download patches
-        run: curl -L -o patches.jar https://github.com/ReVanced/revanced-patches/releases/latest/download/revanced-patches.jar
+      - name: Download ReVanced Patches
+        run: |
+          curl -L -o patches.jar https://github.com/ReVanced/revanced-patches/releases/latest/download/revanced-patches.jar
 
-      - name: Build placeholder
-        run: echo "build running"
+      - name: Download YouTube APK (working version)
+        run: |
+          curl -L -o youtube.apk https://d.apkpure.com/b/APK/com.google.android.youtube
 
+      - name: Patch APK
+        run: |
+          java -jar cli.jar \
+            -a youtube.apk \
+            -o YouHub.apk \
+            -b patches.jar \
+            -i patches.txt \
+            -c options.json
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: YouHub
+          path: YouHub.apk
